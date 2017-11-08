@@ -1,7 +1,7 @@
 #ifndef EASYPR_CONFIG_H_
 #define EASYPR_CONFIG_H_
 
-#define CV_VERSION_THREE_ZERO
+#define CV_VERSION_THREE_TWO
 
 namespace easypr {
 
@@ -26,16 +26,16 @@ namespace easypr {
     PR_DETECT_CMSER = 0x04,  /**Character detect type, using mser  */
   };
 
-static const char* kDefaultSvmPath = "model/svm_hist.xml";
-static const char* kLBPSvmPath = "model/svm_lbp.xml";
-static const char* kHistSvmPath = "model/svm_hist.xml";
+static const char* kDefaultSvmPath = "/home/mao/code/EasyPR/model/svm_hist.xml";
+static const char* kLBPSvmPath = "/home/mao/code/EasyPR/model/svm_lbp.xml";
+static const char* kHistSvmPath = "/home/mao/code/EasyPR/model/svm_hist.xml";
 
-static const char* kDefaultAnnPath = "model/ann.xml";
-static const char* kChineseAnnPath = "model/ann_chinese.xml";
-static const char* kGrayAnnPath = "model/annCh.xml";
+static const char* kDefaultAnnPath = "/home/mao/code/EasyPR/model/ann.xml";
+static const char* kChineseAnnPath = "/home/mao/code/EasyPR/model/ann_chinese.xml";
+static const char* kGrayAnnPath = "/home/mao/code/EasyPR/model/annCh.xml";
 
 //This is important to for key transform to chinese
-static const char* kChineseMappingPath = "model/province_mapping";
+static const char* kChineseMappingPath = "/home/mao/code/EasyPR/model/province_mapping";
 
 typedef enum {
   kForward = 1, // correspond to "has plate"

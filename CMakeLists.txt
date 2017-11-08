@@ -5,8 +5,10 @@ project(easypr)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/home/mao/software/share/OpenCV")
+
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/usr/local/opt/opencv-3.2.0")
+    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/home/mao/software/share/OpenCV")
 endif ()
 
 # OpenVC3 required
@@ -45,7 +47,7 @@ set(SOURCE_FILES
         )
 
 # pack objects to static library
-add_library(easypr STATIC ${SOURCE_FILES})
+add_library(easypr SHARED ${SOURCE_FILES})
 
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     set(EXECUTABLE_NAME "demo")

@@ -17,4 +17,4 @@ set(SOURCE_FILES
         )
 
 # pack objects to static library
-add_library(thirdparty STATIC ${SOURCE_FILES})
+add_library(thirdparty SHARED ${SOURCE_FILES})
