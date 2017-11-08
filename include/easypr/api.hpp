@@ -41,17 +41,15 @@ char* plate_detect(const char* image) {
   if (resultPD == 0 && plates.size() > 0) {
     CPlate &item = plates.at(0);
     cv::Mat plateMat = item.getPlateMat();
-
-    // scale the rect to src;
-    // float scale = 1.f;
-    // item.setPlateScale(scale);
-    // cout << "scale: " << item.getPlateScale() << endl;
-    RotatedRect rect = item.getPlatePos();
-    // rect = scaleBackRRect(rect, 1.f / scale);
+    cv::RotatedRect rect = item.getPlatePos();
+    cv::Point2f points[4];
+    rect.points(points);
     std::ostringstream oss;
-    oss << rect.angle << ",";
-    oss << rect.center.x << "," << rect.center.y << ",";
-    oss << rect.size.width << "," << rect.size.height;
+    // The order is bottomLeft, topLeft, topRight, bottomRight
+    oss << points[0].x << "," << points[0].y << ",";
+    oss << points[1].x << "," << points[1].y << ",";
+    oss << points[2].x << "," << points[2].y << ",";
+    oss << points[3].x << "," << points[3].y;
     locateInfo = oss.str();
     if (locateInfo.empty()) locateInfo = "nil";
   }
@@ -86,7 +84,7 @@ char* plate_locate(const char* image, const bool life_mode = true) {
       cout << "scale: " << results[i].getPlateScale() << endl;
 //      results[i].setPlateScale(1.f);
 //      cout << "scale2: " << results[i].getPlateScale() << endl;
-      RotatedRect rect = results[i].getPlatePos();
+      cv::RotatedRect rect = results[i].getPlatePos();
       results[i].setPlatePos(scaleBackRRect(rect, results[i].getPlateScale()));
       cout << "result: " << i << ", " << tmp_score << endl;
       if (tmp_score > max_score) {
@@ -96,11 +94,15 @@ char* plate_locate(const char* image, const bool life_mode = true) {
     }
     cout << "final: " << max_score_index << ", " << max_score << endl;
     CPlate plateVec = results[max_score_index];
-    RotatedRect rr = plateVec.getPlatePos();
+    cv::RotatedRect rr = plateVec.getPlatePos();
+    cv::Point2f points[4];
+    rr.points(points);
     std::ostringstream oss;
-    oss << rr.angle << ",";
-    oss << rr.center.x << "," << rr.center.y << ",";
-    oss << rr.size.width << "," << rr.size.height;
+    // The order is bottomLeft, topLeft, topRight, bottomRight
+    oss << points[0].x << "," << points[0].y << ",";
+    oss << points[1].x << "," << points[1].y << ",";
+    oss << points[2].x << "," << points[2].y << ",";
+    oss << points[3].x << "," << points[3].y;
     locateInfo = oss.str();
     if (locateInfo.empty()) locateInfo = "nil";
   }
@@ -129,11 +131,15 @@ static std::vector<std::string> plate_recognize(const char* image,
   pr.plateRecognize(img, plates, 0);
 
   for (auto plate : plates) {
-    RotatedRect rect = plate.getPlatePos();
+    cv::RotatedRect rect = plate.getPlatePos();
+    cv::Point2f points[4];
+    rect.points(points);
     std::ostringstream oss;
-    oss << rect.angle << ",";
-    oss << rect.center.x << "," << rect.center.y << ",";
-    oss << rect.size.width << "," << rect.size.height;
+    // The order is bottomLeft, topLeft, topRight, bottomRight
+    oss << points[0].x << "," << points[0].y << ",";
+    oss << points[1].x << "," << points[1].y << ",";
+    oss << points[2].x << "," << points[2].y << ",";
+    oss << points[3].x << "," << points[3].y;
     results.push_back(oss.str() + "|" + plate.getPlateStr());
   }
 
